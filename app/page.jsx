@@ -5,7 +5,7 @@ import {parseString} from 'xml2js';
 export default function Home() {
   const [json, setJson] = useState({});
   const [productNameContains, setProductNameContains] = useState('Black Anodized Billet Aluminum Button');
-  const [matchingProducts, setMatchingProducts] = useState([]);
+  const [matchingProduct, setMatchingProduct] = useState(null);
   return (
     <div>
       <label htmlFor="xmlInput">Update product XML File:</label>
@@ -32,25 +32,25 @@ export default function Home() {
       <input id="productNameContains" type="text" value={productNameContains} onChange={({target: {value}}) => {setProductNameContains(value)}} />
       <br />
       <input type="button" value="Submit" onClick={() => {
-        setMatchingProducts(json.products.product.filter(({Name}) => Name[0].includes(productNameContains)));
+        const matchingProducts = json.products.product.filter(({Name}) => Name[0].includes(productNameContains));
+        const matchingProduct = JSON.parse([...new Set(matchingProducts.map(({Product_ID, Product_URL, Page_Title, Name, ...rest}) => JSON.stringify(rest)))][0]);
+        setMatchingProduct(matchingProduct);
       }} />
       {
-        matchingProducts.length > 0 && matchingProducts.map((product) => (
-          <div>
-            <h1>{product.Page_Title}</h1>
-            Description:
-            <textarea type="text" value={product.Description} style={{width: '500px'}} />
-            <br />
-            Price:
-            <input type="text" value={product.Calculated_Price} />
-            <br />
-            Shipping Price:
-            <input type="text" value={product.Fixed_Shipping_Price} />
-            <br />
-            Weight:
-            <input type="text" value={product.Weight} />
-          </div>
-        ))
+        matchingProduct && <div>
+          <h1>Products whose names contain: {productNameContains}</h1>
+          Description:
+          <textarea type="text" value={matchingProduct.Description} style={{width: '500px'}} />
+          <br />
+          Price:
+          <input type="text" value={matchingProduct.Calculated_Price} />
+          <br />
+          Shipping Price:
+          <input type="text" value={matchingProduct.Fixed_Shipping_Price} />
+          <br />
+          Weight:
+          <input type="text" value={matchingProduct.Weight} />
+        </div>
       }
     </div>
   )
