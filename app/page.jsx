@@ -59,7 +59,7 @@ export default function Home() {
               ],
             },
           };
-          const xml = new Builder().buildObject(json);
+          const xml = new Builder().buildObject(modifiedJson);
           console.log('xml:', xml);
         }}>
           <h1>Products whose names contain: {productNameContains}</h1>
