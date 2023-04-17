@@ -37,20 +37,27 @@ export default function Home() {
         setMatchingProduct(matchingProduct);
       }} />
       {
-        matchingProduct && <div>
+        matchingProduct && <form onSubmit={(event) => {
+          event.preventDefault()
+          const formData = new FormData(event.target);
+          const formProps = Object.fromEntries(formData);
+          console.log('formProps:', formProps);
+        }}>
           <h1>Products whose names contain: {productNameContains}</h1>
           Description:
-          <textarea type="text" value={matchingProduct.Description} style={{width: '500px'}} />
+          <textarea name="Description" type="text" defaultValue={matchingProduct.Description} style={{width: '500px'}} />
           <br />
           Price:
-          <input type="text" value={matchingProduct.Calculated_Price} />
+          <input name="Calculated_Price" type="text" defaultValue={matchingProduct.Calculated_Price} />
           <br />
           Shipping Price:
-          <input type="text" value={matchingProduct.Fixed_Shipping_Price} />
+          <input name="Fixed_Shipping_Price" type="text" defaultValue={matchingProduct.Fixed_Shipping_Price} />
           <br />
           Weight:
-          <input type="text" value={matchingProduct.Weight} />
-        </div>
+          <input name="Weight" type="text" defaultValue={matchingProduct.Weight} />
+          <br />
+          <input type="submit" value="Submit" />
+        </form>
       }
     </div>
   )
