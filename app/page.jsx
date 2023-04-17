@@ -5,7 +5,7 @@ import {Builder, parseString} from 'xml2js';
 export default function Home() {
   const [fileName, setFileName] = useState('');
   const [json, setJson] = useState({});
-  const [productNameContains, setProductNameContains] = useState('Black Anodized Billet Aluminum Button');
+  const [productNameContains, setProductNameContains] = useState('');
   const [matchingProduct, setMatchingProduct] = useState(null);
   const [modifiedXmlUrl, setModifiedXmlUrl] = useState(null);
   return (

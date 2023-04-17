@@ -1,33 +1,7 @@
-# Deploying to GitHub Pages
+# manage-products
 
-This example supports deloying a statically exported Next.js application to GitHub Pages.
+This tool is a simple tool that allows you to export products from Big Commerce as XML, import the products into this tool, search for a common section of the product name that is used across multiple products, and modified fields that are shared, then download the updated XML, to then import into Big Commerce.  
 
-The `out` directory should not be ignored by version control.
+This tool is deployed at https://tonybrobston.github.io/manage-products
 
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
-
-```bash
-npx create-next-app --example github-pages nextjs-github-pages
-# or
-yarn create next-app --example github-pages nextjs-github-pages
-# or
-pnpm create next-app --example github-pages nextjs-github-pages
-```
-
-### Deploy to GitHub Pages
-
-1.  Create a new public GitHub repository.
-1.  Edit `next.config.js` to match your GitHub repository name.
-1.  Push the starter code to the `main` branch.
-1.  Run the `deploy` script (e.g. `npm run deploy`) to create the `gh-pages` branch.
-1.  On GitHub, go to **Settings** > **Pages** > **Branch**, and choose `gh-pages` as the branch with the `/root` folder. Hit **Save**.
-1.  Make a change.
-1.  Run the `deploy` script again to push the changes to GitHub Pages.
-
-Congratulations! You should have a URL like:
-
-```bash
-https://<github-user-name>.github.io/<github-project-name>/
-```
+If you are using this tool and have a feature request, please add it in the issues tab.
