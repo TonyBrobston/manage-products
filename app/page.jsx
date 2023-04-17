@@ -1,11 +1,12 @@
 'use client'
 import {useState} from 'react';
-import {parseString} from 'xml2js';
+import {Builder, parseString} from 'xml2js';
 
 export default function Home() {
   const [json, setJson] = useState({});
   const [productNameContains, setProductNameContains] = useState('Black Anodized Billet Aluminum Button');
   const [matchingProduct, setMatchingProduct] = useState(null);
+  const [modifiedJson, setModifiedJson] = useState({});
   return (
     <div>
       <label htmlFor="xmlInput">Update product XML File:</label>
@@ -19,7 +20,6 @@ export default function Home() {
             const reader = new FileReader();
             reader.onload = ({target: {result}}) => {
               parseString(result, function (error, fileJson) {
-                console.log(fileJson);
                 setJson(fileJson);
               });
             }
@@ -41,7 +41,26 @@ export default function Home() {
           event.preventDefault()
           const formData = new FormData(event.target);
           const formProps = Object.fromEntries(formData);
-          console.log('formProps:', formProps);
+          const formPropsAsArrays = Object.entries(formProps).reduce((accumulator, [key, value]) => ({...accumulator, [key]: [value]}), {});
+          console.log('json:', JSON.stringify(json, null, 2));
+          const modifiedJson = {
+            ...json,
+            products: {
+              product: [
+                ...json.products.product.map((product) => {
+                  if (product.Name[0].includes(productNameContains)) {
+                    return {
+                      ...product,
+                      ...formPropsAsArrays,
+                    }
+                  }
+                  return product;
+                }),
+              ],
+            },
+          };
+          const xml = new Builder().buildObject(json);
+          console.log('xml:', xml);
         }}>
           <h1>Products whose names contain: {productNameContains}</h1>
           Description:
