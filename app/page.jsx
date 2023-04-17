@@ -46,16 +46,16 @@ export default function Home() {
           const modifiedJson = {
             ...json,
             products: {
+              ...json.products,
               product: [
-                ...json.products.product.map((product) => {
-                  if (product.Name[0].includes(productNameContains)) {
-                    return {
+                ...json.products.product.map((product) => (
+                  product.Name[0].includes(productNameContains) ?
+                    {
                       ...product,
                       ...formPropsAsArrays,
                     }
-                  }
-                  return product;
-                }),
+                    : product
+                )),
               ],
             },
           };
