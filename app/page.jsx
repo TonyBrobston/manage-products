@@ -3,10 +3,11 @@ import {useState} from 'react';
 import {Builder, parseString} from 'xml2js';
 
 export default function Home() {
+  const [fileName, setFileName] = useState('');
   const [json, setJson] = useState({});
   const [productNameContains, setProductNameContains] = useState('Black Anodized Billet Aluminum Button');
   const [matchingProduct, setMatchingProduct] = useState(null);
-  const [modifiedJson, setModifiedJson] = useState({});
+  const [modifiedXmlUrl, setModifiedXmlUrl] = useState(null);
   return (
     <div>
       <label htmlFor="xmlInput">Update product XML File:</label>
@@ -17,6 +18,7 @@ export default function Home() {
         onChange={({target: {files}}) => {
           if (files) {
             const file = files[0];
+            setFileName(file.name.split('.xml')[0])
             const reader = new FileReader();
             reader.onload = ({target: {result}}) => {
               parseString(result, function (error, fileJson) {
@@ -42,7 +44,6 @@ export default function Home() {
           const formData = new FormData(event.target);
           const formProps = Object.fromEntries(formData);
           const formPropsAsArrays = Object.entries(formProps).reduce((accumulator, [key, value]) => ({...accumulator, [key]: [value]}), {});
-          console.log('json:', JSON.stringify(json, null, 2));
           const modifiedJson = {
             ...json,
             products: {
@@ -60,7 +61,9 @@ export default function Home() {
             },
           };
           const xml = new Builder().buildObject(modifiedJson);
-          console.log('xml:', xml);
+          const modifiedXmlBlob = new Blob([xml], {type: 'text/xml'});
+          const url = window.URL.createObjectURL(modifiedXmlBlob);
+          setModifiedXmlUrl(url);
         }}>
           <h1>Products whose names contain: {productNameContains}</h1>
           Description:
@@ -78,6 +81,7 @@ export default function Home() {
           <input type="submit" value="Submit" />
         </form>
       }
+      {modifiedXmlUrl && <a href={modifiedXmlUrl} download={`${fileName}-modified`}><button>Download Modified XML</button></a>}
     </div>
   )
 }
