@@ -1,7 +1,13 @@
 'use client'
 import {useState} from 'react';
 import {Builder, parseString} from 'xml2js';
-import {Box, Button, Container, CssBaseline, FormControl, TextField} from '@mui/material';
+import Container from '@mui/material/Container'
+import CssBaseline from '@mui/material/CssBaseline';
+import FormControl from '@mui/material/FormControl'
+import InputAdornment from '@mui/material/InputAdornment'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
 import {ThemeProvider, createTheme} from '@mui/material/styles';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 
@@ -128,18 +134,27 @@ export default function Home() {
                   label="Price"
                   defaultValue={matchingProduct.Calculated_Price}
                   sx={{ margin: "10px", width: "382px" }}
+                  InputProps={{
+                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                  }}
                 />
                 <TextField
                   name="Fixed_Shipping_Price"
                   label="Shipping Price"
                   defaultValue={matchingProduct.Fixed_Shipping_Price}
                   sx={{ margin: "10px", width: "382px" }}
+                  InputProps={{
+                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                  }}
                 />
                 <TextField
                   name="Weight"
                   label="Weight"
                   defaultValue={matchingProduct.Weight}
                   sx={{ margin: "10px", width: "382px" }}
+                  InputProps={{
+                    endAdornment: <InputAdornment position="start">g</InputAdornment>,
+                  }}
                 />
                 <Button
                   variant="outlined"
