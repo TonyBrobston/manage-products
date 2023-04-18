@@ -2,10 +2,14 @@
 import {useState} from 'react';
 import {Builder, parseString} from 'xml2js';
 import {Box, Button, Container, CssBaseline, FormControl, TextField} from '@mui/material';
+import {ThemeProvider, createTheme} from '@mui/material/styles';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 
-function UploadFileIcon() {
-  return null;
-}
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 export default function Home() {
   const [filename, setFilename] = useState('');
@@ -14,7 +18,7 @@ export default function Home() {
   const [matchingProduct, setMatchingProduct] = useState(null);
   const [modifiedXmlUrl, setModifiedXmlUrl] = useState(null);
   return (
-    <>
+    <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Container
         sx={{display: "flex"}}
@@ -27,7 +31,7 @@ export default function Home() {
         >
           <Button
             component="label"
-            variant="outlined"
+            variant="text"
             startIcon={<UploadFileIcon />}
             sx={{ margin: "10px", float: "left" }}
           >
@@ -59,7 +63,7 @@ export default function Home() {
             sx={{ margin: "10px" }}
           />
           <Button
-            variant="contained"
+            variant="outlined"
             onClick={() => {
               const matchingProducts = json.products.product.filter(({Name}) => Name[0].includes(productNameContains));
               const matchingProduct = JSON.parse([...new Set(matchingProducts.map(({Product_ID, Product_URL, Page_Title, Name, ...rest}) => JSON.stringify(rest)))][0]);
@@ -121,7 +125,7 @@ export default function Home() {
                   sx={{ margin: "10px", width: "382px" }}
                 />
                 <Button
-                  variant="contained"
+                  variant="outlined"
                   type="submit"
                   sx={{ width: "400px" }}
                 >
@@ -142,6 +146,6 @@ export default function Home() {
           }
         </FormControl>
       </Container>
-    </>
+    </ThemeProvider>
   )
 }
