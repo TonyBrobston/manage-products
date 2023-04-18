@@ -68,51 +68,79 @@ export default function Home() {
           >
             Submit
           </Button>
+          {
+            matchingProduct &&
+              <Box component="form" onSubmit={(event) => {
+                event.preventDefault()
+                const formData = new FormData(event.target);
+                const formProps = Object.fromEntries(formData);
+                const formPropsAsArrays = Object.entries(formProps).reduce((accumulator, [key, value]) => ({...accumulator, [key]: [value]}), {});
+                const modifiedJson = {
+                  ...json,
+                  products: {
+                    ...json.products,
+                    product: [
+                      ...json.products.product.map((product) => (
+                        product.Name[0].includes(productNameContains) ?
+                          {
+                            ...product,
+                            ...formPropsAsArrays,
+                          }
+                          : product
+                      )),
+                    ],
+                  },
+                };
+                const xml = new Builder().buildObject(modifiedJson);
+                const modifiedXmlBlob = new Blob([xml], {type: 'text/xml'});
+                const url = window.URL.createObjectURL(modifiedXmlBlob);
+                setModifiedXmlUrl(url);
+              }}>
+                <TextField
+                  name="Description"
+                  label="Description"
+                  defaultValue={matchingProduct.Description}
+                  sx={{ margin: "10px", width: "382px" }}
+                />
+                <TextField
+                  name="Calculated_Price"
+                  label="Price"
+                  defaultValue={matchingProduct.Calculated_Price}
+                  sx={{ margin: "10px", width: "382px" }}
+                />
+                <TextField
+                  name="Fixed_Shipping_Price"
+                  label="Shipping Price"
+                  defaultValue={matchingProduct.Fixed_Shipping_Price}
+                  sx={{ margin: "10px", width: "382px" }}
+                />
+                <TextField
+                  name="Weight"
+                  label="Weight"
+                  defaultValue={matchingProduct.Weight}
+                  sx={{ margin: "10px", width: "382px" }}
+                />
+                <Button
+                  variant="contained"
+                  type="submit"
+                  sx={{ width: "400px" }}
+                >
+                  Submit
+                </Button>
+              </Box>
+          }
+          {
+            modifiedXmlUrl &&
+              <a href={modifiedXmlUrl} download={`${filename}-modified`}>
+                <Button
+                  variant="contained"
+                  sx={{ marginTop: "10px", width: "400px" }}
+                >
+                  Download Modified XML
+                </Button>
+              </a>
+          }
         </FormControl>
-        {
-          matchingProduct && <form onSubmit={(event) => {
-            event.preventDefault()
-            const formData = new FormData(event.target);
-            const formProps = Object.fromEntries(formData);
-            const formPropsAsArrays = Object.entries(formProps).reduce((accumulator, [key, value]) => ({...accumulator, [key]: [value]}), {});
-            const modifiedJson = {
-              ...json,
-              products: {
-                ...json.products,
-                product: [
-                  ...json.products.product.map((product) => (
-                    product.Name[0].includes(productNameContains) ?
-                      {
-                        ...product,
-                        ...formPropsAsArrays,
-                      }
-                      : product
-                  )),
-                ],
-              },
-            };
-            const xml = new Builder().buildObject(modifiedJson);
-            const modifiedXmlBlob = new Blob([xml], {type: 'text/xml'});
-            const url = window.URL.createObjectURL(modifiedXmlBlob);
-            setModifiedXmlUrl(url);
-          }}>
-            <h1>Products whose names contain: {productNameContains}</h1>
-            Description:
-            <textarea name="Description" type="text" defaultValue={matchingProduct.Description} style={{width: '500px'}} />
-            <br />
-            Price:
-            <input name="Calculated_Price" type="text" defaultValue={matchingProduct.Calculated_Price} />
-            <br />
-            Shipping Price:
-            <input name="Fixed_Shipping_Price" type="text" defaultValue={matchingProduct.Fixed_Shipping_Price} />
-            <br />
-            Weight:
-            <input name="Weight" type="text" defaultValue={matchingProduct.Weight} />
-            <br />
-            <input type="submit" value="Submit" />
-          </form>
-        }
-        {modifiedXmlUrl && <a href={modifiedXmlUrl} download={`${filename}-modified`}><button>Download Modified XML</button></a>}
       </Container>
     </>
   )
