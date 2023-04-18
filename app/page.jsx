@@ -8,7 +8,8 @@ import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
-import {ThemeProvider, createTheme} from '@mui/material/styles';
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import createTheme from '@mui/material/styles/createTheme';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 
 const caseInsensitiveIncludes = (needle, haystack) => haystack.toLowerCase().includes(needle.toLowerCase());
