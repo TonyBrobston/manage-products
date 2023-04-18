@@ -13,6 +13,18 @@ const darkTheme = createTheme({
   },
 });
 
+const findAndSetMatchingProduct = (json, productNameContains, setMatchingProduct) => {
+  const matchingProducts = json.products.product.filter(({Name}) => caseInsensitiveIncludes(productNameContains, Name[0]));
+  const matchingProduct = JSON.parse([...new Set(matchingProducts.map(({
+    Product_ID,
+    Product_URL,
+    Page_Title,
+    Name,
+    ...rest
+  }) => JSON.stringify(rest)))][0]);
+  setMatchingProduct(matchingProduct);
+}
+
 export default function Home() {
   const [filename, setFilename] = useState('');
   const [json, setJson] = useState({});
@@ -62,14 +74,17 @@ export default function Home() {
             label="Shared Product Name Text"
             value={productNameContains}
             onChange={({target: {value}}) => {setProductNameContains(value)}}
+            onKeyDown={({key}) => {
+              if(key === "Enter"){
+                findAndSetMatchingProduct(json, productNameContains, setMatchingProduct);
+              }
+            }}
             sx={{ margin: "10px" }}
           />
           <Button
             variant="outlined"
             onClick={() => {
-              const matchingProducts = json.products.product.filter(({Name}) => caseInsensitiveIncludes(productNameContains, Name[0]));
-              const matchingProduct = JSON.parse([...new Set(matchingProducts.map(({Product_ID, Product_URL, Page_Title, Name, ...rest}) => JSON.stringify(rest)))][0]);
-              setMatchingProduct(matchingProduct);
+              findAndSetMatchingProduct(json, productNameContains, setMatchingProduct);
             }}
           >
             Submit
