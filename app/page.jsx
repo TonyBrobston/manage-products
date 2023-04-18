@@ -5,6 +5,8 @@ import {Box, Button, Container, CssBaseline, FormControl, TextField} from '@mui/
 import {ThemeProvider, createTheme} from '@mui/material/styles';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 
+const caseInsensitiveIncludes = (needle, haystack) => haystack.toLowerCase().includes(needle.toLowerCase());
+
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -65,7 +67,7 @@ export default function Home() {
           <Button
             variant="outlined"
             onClick={() => {
-              const matchingProducts = json.products.product.filter(({Name}) => Name[0].includes(productNameContains));
+              const matchingProducts = json.products.product.filter(({Name}) => caseInsensitiveIncludes(productNameContains, Name[0]));
               const matchingProduct = JSON.parse([...new Set(matchingProducts.map(({Product_ID, Product_URL, Page_Title, Name, ...rest}) => JSON.stringify(rest)))][0]);
               setMatchingProduct(matchingProduct);
             }}
@@ -85,7 +87,7 @@ export default function Home() {
                     ...json.products,
                     product: [
                       ...json.products.product.map((product) => (
-                        product.Name[0].includes(productNameContains) ?
+                        caseInsensitiveIncludes(productNameContains, product.Name[0]) ?
                           {
                             ...product,
                             ...formPropsAsArrays,
