@@ -1,45 +1,16 @@
-# Material UI - Next.js example
+# manage-products
 
-## How to use
+This is a simple client-side tool that allows you to modify multiple Big Commerce Products without manually opening them all.
 
-Download the example [or clone the repo](https://github.com/mui/material-ui):
+## How to:
+1. Export products from Big Commerce as XML
+2. Navigate here: https://tonybrobston.github.io/manage-products
+3. Import the products into this tool
+4. Search for a common section of the product name that is used across multiple products
+5. Modify fields that are shared
+6. Download the modified XML
+7. Import modified XML into Big Commerce.
 
-<!-- #default-branch-switch -->
+## Ideas? Issues?
 
-```sh
-curl https://codeload.github.com/mui/material-ui/tar.gz/master | tar -xz --strip=2  material-ui-master/examples/material-next
-cd material-next
-```
-
-Install it and run:
-
-```sh
-npm install
-npm run dev
-```
-
-or:
-
-<!-- #default-branch-switch -->
-
-[![Edit on StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/mui/material-ui/tree/master/examples/material-next)
-
-[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/mui/material-ui/tree/master/examples/material-next)
-
-## The idea behind the example
-
-The project uses [Next.js](https://github.com/vercel/next.js), which is a framework for server-rendered React apps.
-It includes `@mui/material` and its peer dependencies, including [Emotion](https://emotion.sh/docs/introduction), the default style engine in Material UI v5.
-If you prefer, you can [use styled-components instead](https://mui.com/material-ui/guides/interoperability/#styled-components).
-
-## The Link component
-
-The [example folder](https://github.com/mui/material-ui/tree/HEAD/examples/material-next-ts) provides an adapter for the use of [Next.js's Link component](https://nextjs.org/docs/api-reference/next/link) with MUI.
-More information [in the documentation](https://mui.com/material-ui/guides/routing/#next-js).
-
-## What's next?
-
-<!-- #default-branch-switch -->
-
-You now have a working example project.
-You can head back to the documentation, continuing browsing it from the [templates](https://mui.com/material-ui/getting-started/templates/) section.
+If you are using this tool and have a feature request, please add it in the issues tab.
