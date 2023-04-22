@@ -47,7 +47,6 @@ function Index({classes}) {
         const formData = new FormData(event.target);
         const formProps = Object.fromEntries(formData);
         const formPropsAsArrays = Object.entries(formProps).reduce((accumulator, [key, value]) => ({...accumulator, [key]: [value]}), {});
-        console.log('formPropsAsArrays:', formPropsAsArrays);
         const modifiedJson = {
           ...json,
           products: {
