@@ -4,7 +4,7 @@
     "dev": "next dev",
     "lint": "next lint",
     "build": "next build",
-    "deploy": "next build && touch out/.nojekyll && git add out/ && git commit -m \"Deploy\" && git subtree push --prefix out origin gh-pages"
+    "deploy": "next build && gh-pages -d out && rm -rf out"
   },
   "dependencies": {
     "@emotion/cache": "latest",
@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "eslint": "latest",
-    "eslint-config-next": "latest"
+    "eslint-config-next": "latest",
+    "gh-pages": "^5.0.0"
   }
 }
